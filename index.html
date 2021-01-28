@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">  
+<title>Mason Exercise 2</title>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>  
+<link rel="stylesheet" href="css/bootstrap.min.css">
+        <body>
+            <div class="border border-dark bg-light p-3" id="container">
+
+                <h1 class="mb-3">
+                  To Do List
+                </h1>
+              
+                <div class="mb-3" id="list">
+              
+                  <ul class="list-group">
+                    <li class="list-group-item">Placeholder Item</li>
+                  </ul>
+              
+                </div>
+              
+                <input type="text" id="text" class="form-control mb-3" placeholder="next to do">
+                
+                <button id="add" class="btn btn-primary">
+                  Add
+                </button>
+              
+                <button id="remove" class="btn btn-danger">
+                  Remove
+                </button>
+              
+              </div>
+<script>
+$(document).on("click", "#add", insert);
+$(document).on("click", "#remove", remove);
+$(document).on("click", ".list-group-item", select);
+
+
+function insert() {
+
+	var text = $("#text").val();
+  
+	if (text == "") {
+  
+  	alert("Your textbox is empty.");
+  
+  } else {
+  
+  	var html = '<li class="list-group-item">'+text+'</li>';
+		$("#list>ul").append(html);
+    $("#text").val("");
+    save();
+
+  }
+
+} 
+
+function remove() {
+
+	var count = $("li.list-group-item.active").length;
+  
+	if (count == 0) {
+  
+  	alert("Select at least one list item.");
+  
+  } else {
+  
+  	$("li.list-group-item.active").remove();
+    save();
+  
+  }
+  
+
+} 
+
+function select() {
+
+	$(this).toggleClass("active");
+
+} 
+
+function save() {
+
+	var html = $("#list").html();
+	localStorage.setItem("todo", html);
+
+} 
+
+function load() {
+
+	var html = localStorage.getItem("todo");
+
+	if (html != "") {
+  
+  	$("#list").html(html);
+  
+  }
+
+}
+
+
+load();
+
+</script>
+        </body>
+</html>
